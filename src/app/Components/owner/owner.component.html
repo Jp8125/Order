@@ -1,0 +1,25 @@
+<table class="table table-success table-striped-columns">
+   <thead>
+    <tr>
+        <th>ID</th>
+        <th>Food Name</th>
+        <th>Actions</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr *ngFor="let item of orders| paginate: { itemsPerPage: 5, currentPage: p }">
+        <td>{{item.id}}</td>
+        <td>{{item.foodItemName}}</td>
+        <td>
+            <ng-container *ngIf="item.isOrderAccepted;else reject">
+                yes
+            </ng-container>
+            <ng-template #reject>
+                <button type="button" class="btn btn-primary" (click)="AcceptOrder(item.uid,item.id)">Accept</button>
+                <button type="button" class="btn btn-danger" (click)="RejectOrder(item.uid,item.id)">Reject</button>
+            </ng-template>
+        </td>
+    </tr>
+   </tbody>
+  </table>
+  <pagination-controls (pageChange)="p=$event"></pagination-controls>

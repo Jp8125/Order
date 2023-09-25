@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="floatingInput" [(ngModel)]="foodname">
+        <label for="floatingInput">Enter your FoodDetails</label>
+      </div>
+      <button type="button" class="btn btn-outline-success" (click)="CreateOrder()">Order</button>
+</div>
+<table class="table table-primary  table-striped-columns">
+    <thead>
+     <tr>
+         <th>ID</th>
+         <th>Food Name</th>
+         <th>Accepted</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr class="table table-success " [ngClass]="{'table table-warning': item.isOrderAccepted}" *ngFor="let item of orders| paginate: { itemsPerPage: 5, currentPage: p }">
+         <td>{{item.id}}</td>
+         <td>{{item.foodItemName}}</td>
+         <td >
+            <ng-container *ngIf="item.isOrderAccepted;else reject">
+                yes
+            </ng-container>
+            <ng-template #reject>
+                no
+            </ng-template>
+         </td>
+     </tr>
+    </tbody>
+   </table>
+   <pagination-controls (pageChange)="p=$event"></pagination-controls>
+ 
